@@ -1,4 +1,6 @@
+using System;
 using Expense.Service;
+using Expense.Service.Exceptions;
 using Expense.Service.Expense;
 using Expense.Service.Projects;
 using Xunit;
@@ -55,8 +57,11 @@ namespace Expense.Service.Test
         public void Should_throw_unexpected_project_exception_if_project_is_invalid()
         {
             // given
+            var project = new Project(ProjectType.UNEXPECTED_PROJECT_TYPE, "Other Project");
             // when
+            var result = new Action(() => ExpenseService.GetExpenseCodeByProjectTypeAndName(project));
             // then
+            Assert.Throws<UnexpectedProjectTypeException>(result);
         }
     }
 }
